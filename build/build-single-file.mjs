@@ -108,7 +108,10 @@ async function main() {
     '  Cache-Control: public, max-age=31536000, immutable',
     '/styles/*',
     '  Cache-Control: public, max-age=31536000, immutable',
+    // Cloudflare serves /asli-munafa.html at /asli-munafa ("pretty URLs"): always download it, never render it here.
     '/asli-munafa.html',
+    '  Content-Disposition: attachment; filename="asli-munafa.html"',
+    '/asli-munafa',
     '  Content-Disposition: attachment; filename="asli-munafa.html"',
     '',
   ].join('\n'));
