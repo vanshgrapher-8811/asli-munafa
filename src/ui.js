@@ -1097,6 +1097,12 @@ function boot() {
   const swOk = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   if ('serviceWorker' in navigator && swOk && document.documentElement.dataset.single !== '1') {
     window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+    // A newer version just took over. If the visitor hasn't typed anything yet, show it right away.
+    const hadWorker = !!navigator.serviceWorker.controller;
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (hadWorker && !reloaded && state.edited.size === 0) { reloaded = true; location.reload(); }
+    });
   }
 }
 

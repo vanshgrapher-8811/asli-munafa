@@ -45,10 +45,21 @@ createServer(async (req, res) => {
   try {
     let path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     if (path.endsWith('/')) path += 'index.html';
+    // Like Cloudflare Pages: "/privacy" serves privacy.html, and "/privacy.html" redirects to "/privacy".
+    if (/\.html$/.test(path) && !path.endsWith('/index.html') && path !== '/asli-munafa.html' && path !== '/404.html') {
+      res.writeHead(308, { Location: path.replace(/\.html$/, '') }).end();
+      return;
+    }
+    if (!extname(path)) path += '.html';
     const file = normalize(join(DIST, path));
     if (!file.startsWith(DIST)) { res.writeHead(403).end(); return; }
-    const s = await stat(file);
-    if (!s.isFile()) throw new Error('not a file');
+    const s = await stat(file).catch(() => null);
+    if (!s || !s.isFile()) {
+      const page = await readFile(join(DIST, '404.html')).catch(() => Buffer.from('Not found'));
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' }).end(page);
+      console.log(`404 ${req.method} ${req.url}`);
+      return;
+    }
     const body = await readFile(file);
     for (const [k, v] of headersFor(rules, path)) res.setHeader(k, v);
     res.setHeader('Content-Type', TYPES[extname(file)] || 'application/octet-stream');

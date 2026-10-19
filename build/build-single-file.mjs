@@ -64,7 +64,7 @@ async function main() {
   const html = await read('index.html');
   const fonts = (await listFiles('fonts')).filter((f) => f.endsWith('.woff2'));
   const favicon = await read('icons/favicon.svg');
-  const version = sha(js + css + html).slice(0, 10);
+  const version = sha(js + css + html + (await read('src/sw.js')) + LEGAL_PAGES.join()).slice(0, 10);
 
   // ---- multi-file site
   const jsName = `app.${sha(js).slice(0, 8)}.js`;
@@ -84,7 +84,8 @@ async function main() {
   if (siteHtml === html) throw new Error('Could not find the module script tag in index.html');
   await writeFile(join(DIST, 'index.html'), siteHtml);
 
-  const shell = ['./', './index.html', './privacy.html', './terms.html', './styles/legal.css', `./${jsName}`, `./${cssName}`, './icons/favicon.svg', ...fonts.map((f) => `./fonts/${f}`)];
+  // Pages are cached at the addresses Cloudflare serves them on ("pretty URLs"), so nothing cached is a redirect.
+  const shell = ['./', './privacy', './terms', './styles/legal.css', `./${jsName}`, `./${cssName}`, './icons/favicon.svg', ...fonts.map((f) => `./fonts/${f}`)];
   const sw = (await read('src/sw.js')).replace("'__VERSION__'", `'${version}'`).replace('= __FILES__;', `= ${JSON.stringify(shell, null, 2)};`);
   if (sw.includes("'__VERSION__'") || sw.includes('= __FILES__')) throw new Error('sw.js placeholders not filled');
   await writeFile(join(DIST, 'sw.js'), sw);
@@ -132,7 +133,7 @@ async function main() {
   // The offline file has no neighbouring pages, so its legal links point at the live site.
   const site = `https://${sources.config.match(/SITE_URL:\s*'([^']+)'/)[1]}`;
   let single = html
-    .replace(/href="(privacy|terms)\.html"/g, (m, page) => `href="${site}/${page}" rel="noopener noreferrer"`)
+    .replace(/href="(privacy|terms)"/g, (m, page) => `href="${site}/${page}" rel="noopener noreferrer"`)
     .replace('<html lang="en">', '<html lang="en" data-single="1">')
     .replace(/<meta http-equiv="Content-Security-Policy" content="[^"]*">/, `<meta http-equiv="Content-Security-Policy" content="${singleCsp}">`)
     .replace(/<link rel="preload"[^>]*>\n/g, '')
