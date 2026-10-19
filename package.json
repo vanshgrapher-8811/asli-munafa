@@ -1,0 +1,17 @@
+{
+  "name": "asli-munafa",
+  "version": "1.0.0",
+  "description": "A private, offline real-profit calculator for small businesses. No server, no tracking.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "build": "node build/build-single-file.mjs",
+    "serve": "node build/serve.mjs",
+    "preview": "node build/build-single-file.mjs && node build/serve.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

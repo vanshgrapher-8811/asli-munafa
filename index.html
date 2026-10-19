@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; worker-src 'self'; manifest-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Asli Munafa · Real profit calculator</title>
+<meta name="description" content="See your business's real profit in 60 seconds. Private: your numbers never leave your phone. No login, no server, works offline.">
+<meta name="theme-color" content="#120E0B">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/unbounded-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/poppins-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles/main.css">
+<script type="module" src="src/ui.js"></script>
+</head>
+<body>
+<a class="skip" href="#calc" data-t="skip">Skip to the calculator</a>
+
+<!-- 1. Trust bar: always visible -->
+<div class="trustbar" role="region" aria-label="Privacy">
+  <svg class="lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path class="lock-shackle" d="M7.5 10.5V8a4.5 4.5 0 0 1 9 0v2.5" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+    <path class="lock-body-l" d="M4.5 11.5a1.5 1.5 0 0 1 1.5-1.5h6v11H6a1.5 1.5 0 0 1-1.5-1.5z"/>
+    <path class="lock-body-r" d="M12 10h6a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 18 21h-6z"/>
+    <circle class="lock-hole" cx="12" cy="15.2" r="1.6"/>
+  </svg>
+  <p class="trust-text"><span data-t="trust.text">Your numbers never leave this phone. No login. No server. Works in airplane mode.</span>
+    <button type="button" class="linkish" id="how-btn" data-t="trust.how" aria-haspopup="dialog">How do I know?</button></p>
+  <button type="button" class="lang-btn" id="lang-btn" lang="hi" data-t="lang.switch" data-t-aria="lang.switchLabel" aria-label="Switch to Hindi">हिंदी</button>
+</div>
+
+<!-- Horizon: the journey. The craft is your business. -->
+<header class="horizon" id="horizon" data-state="idle">
+  <svg class="hz-sky" viewBox="0 0 400 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="hz-sky-g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#12095a"/>
+        <stop offset=".55" stop-color="#2A14B8"/>
+        <stop offset="1" stop-color="#3B1FE0"/>
+      </linearGradient>
+      <mask id="hz-sun-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="150">
+        <rect width="400" height="150" fill="#fff"/>
+        <rect x="0" y="112" width="400" height="2" fill="#000"/>
+        <rect x="0" y="120" width="400" height="3" fill="#000"/>
+        <rect x="0" y="129" width="400" height="4" fill="#000"/>
+        <rect x="0" y="139" width="400" height="5" fill="#000"/>
+      </mask>
+      <clipPath id="hz-planet-clip"><circle cx="268" cy="150" r="98"/></clipPath>
+    </defs>
+    <rect width="400" height="150" fill="url(#hz-sky-g)"/>
+    <g class="hz-stars" fill="#F3EEE6">
+      <path class="tw tw1" d="M40 30l1.4 4.6 4.6 1.4-4.6 1.4-1.4 4.6-1.4-4.6-4.6-1.4 4.6-1.4z"/>
+      <path class="tw tw2" d="M356 22l1 3.4 3.4 1-3.4 1-1 3.4-1-3.4-3.4-1 3.4-1z"/>
+      <path class="tw tw3" d="M150 16l.8 2.6 2.6.8-2.6.8-.8 2.6-.8-2.6-2.6-.8 2.6-.8z"/>
+      <circle cx="96" cy="58" r="1"/><circle cx="208" cy="10" r=".9"/><circle cx="318" cy="44" r="1.1"/>
+      <circle cx="18" cy="80" r=".8"/><circle cx="388" cy="70" r=".9"/><circle cx="122" cy="88" r=".7"/>
+    </g>
+    <ellipse class="hz-halo" cx="268" cy="150" rx="116" ry="112" fill="none" stroke="#C7A8F0" stroke-width="1.2" opacity=".55"/>
+    <g class="hz-planet">
+      <circle cx="268" cy="150" r="98" fill="#7FE0DC"/>
+      <g clip-path="url(#hz-planet-clip)">
+        <path d="M268 52a98 98 0 0 1 0 196a120 120 0 0 0 0-196z" fill="#2EC4A6"/>
+        <g fill="#6C6CF5">
+          <circle cx="214" cy="92" r="15"/><circle cx="262" cy="70" r="11"/><circle cx="318" cy="90" r="17"/>
+          <circle cx="352" cy="128" r="9"/><circle cx="196" cy="128" r="8"/>
+        </g>
+      </g>
+    </g>
+    <g class="hz-sun" mask="url(#hz-sun-cut)">
+      <circle cx="226" cy="120" r="44" fill="#F0603A"/>
+      <path d="M226 76a44 44 0 0 1 0 88z" fill="#E04A26" opacity=".55"/>
+    </g>
+    <g class="hz-clouds" fill="#F6A99B">
+      <path d="M-10 150v-22a16 16 0 0 1 22-15a22 22 0 0 1 40-8a18 18 0 0 1 30 10a14 14 0 0 1 22 9v26z"/>
+      <path d="M128 150v-10a10 10 0 0 1 16-8a14 14 0 0 1 26 2a9 9 0 0 1 12 6v10z" opacity=".95"/>
+      <path d="M300 150v-18a14 14 0 0 1 20-12a20 20 0 0 1 36-6a16 16 0 0 1 28 8a12 12 0 0 1 26 6v22z"/>
+    </g>
+    <g class="hz-clouds-shade" fill="#E98C80" opacity=".7">
+      <path d="M-10 150v-6h114v6z"/><path d="M300 150v-6h116v6z"/>
+    </g>
+  </svg>
+  <div class="hz-floor" aria-hidden="true"><div class="hz-grid"></div><div class="hz-horizon-glow"></div></div>
+  <div class="hz-craft" aria-hidden="true">
+    <div class="craft-shadow"></div>
+    <svg class="craft" viewBox="0 0 120 60" focusable="false">
+      <polygon points="60,6 6,44 54,36" fill="#F0603A"/>
+      <polygon points="60,6 114,44 66,36" fill="#C8441F"/>
+      <polygon points="54,36 60,6 60,54" fill="#8C8CFA"/>
+      <polygon points="66,36 60,6 60,54" fill="#6C6CF5"/>
+      <polyline points="6,44 54,36 60,54 66,36 114,44" fill="none" stroke="#120E0B" stroke-width="1.2" stroke-linejoin="round" opacity=".35"/>
+    </svg>
+    <div class="craft-trail"></div>
+  </div>
+  <div class="hz-title">
+    <h1 id="app-title"><span data-t="app.title">Asli Munafa</span></h1>
+    <p class="hz-tagline" data-t="app.tagline">Your real profit, in 60 seconds</p>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Canvas world: the workspace where numbers are laid out -->
+  <section class="canvas" id="calc" aria-labelledby="type-title">
+    <div class="canvas-deco" aria-hidden="true">
+      <svg class="foil foil-a" viewBox="0 0 80 80" focusable="false"><polygon points="8,52 40,6 72,40 44,74" fill="#F7C948"/><polygon points="40,6 72,40 44,74" fill="#E08A1E"/><path d="M22 32l26 30M30 20l26 30" stroke="#fff" stroke-width="5" opacity=".8"/></svg>
+      <svg class="foil foil-b" viewBox="0 0 80 80" focusable="false"><polygon points="10,40 46,10 70,50 30,70" fill="#F7C948"/><polygon points="46,10 70,50 30,70" fill="#E08A1E"/><path d="M24 30l30 30" stroke="#fff" stroke-width="6" opacity=".8"/></svg>
+      <span class="sphere sphere-a"></span>
+      <span class="sphere sphere-b"></span>
+      <span class="confetti c1"></span><span class="confetti c2"></span><span class="confetti c3"></span><span class="confetti c4"></span>
+    </div>
+    <div class="selbox" id="selbox" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <p class="intro" data-t="app.sub">Type a few monthly numbers. See what your business really keeps, from sales all the way down to real profit.</p>
+
+    <section class="card step type-card" data-step="0" aria-labelledby="type-title">
+      <h2 id="type-title" data-t="type.title">What kind of business?</h2>
+      <p class="card-sub" data-t="type.sub">Pick one. We’ll fill in example numbers you can replace.</p>
+      <div class="types" id="types" role="radiogroup" aria-labelledby="type-title">
+        <button type="button" class="type" role="radio" data-type="d2c" aria-checked="true"><svg class="type-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><polygon points="4,9 16,4 28,9 16,14" fill="#F7C948"/><polygon points="4,9 16,14 16,28 4,22" fill="#F0603A"/><polygon points="16,14 28,9 28,22 16,28" fill="#C8441F"/></svg><span class="type-name">Online / D2C brand</span><span class="type-sub">Website, Instagram, marketplaces</span></button>
+        <button type="button" class="type" role="radio" data-type="shop" aria-checked="false"><svg class="type-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><polygon points="3,12 6,4 26,4 29,12" fill="#F7C948"/><rect x="5" y="12" width="11" height="15" fill="#7FE0DC"/><rect x="16" y="12" width="11" height="15" fill="#2EC4A6"/><rect x="12" y="18" width="8" height="9" fill="#120E0B"/></svg><span class="type-name">Shop / retail</span><span class="type-sub">Kirana, boutique, store</span></button>
+        <button type="button" class="type" role="radio" data-type="cafe" aria-checked="false"><svg class="type-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><polygon points="5,9 16,9 15,27 8,27" fill="#F2D6CF"/><polygon points="16,9 26,9 23,27 15,27" fill="#F6A99B"/><path d="M25 13h3a3 3 0 0 1 0 6h-4" fill="none" stroke="#F6A99B" stroke-width="2.4"/><path d="M11 6c0-2 2-2 2-4M17 6c0-2 2-2 2-4" stroke="#C7A8F0" stroke-width="1.6" fill="none"/></svg><span class="type-name">Café / restaurant</span><span class="type-sub">Dine-in, takeaway, delivery apps</span></button>
+        <button type="button" class="type" role="radio" data-type="service" aria-checked="false"><svg class="type-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><polygon points="16,2 19,13 16,16 13,13" fill="#C7A8F0"/><polygon points="16,30 13,19 16,16 19,19" fill="#6C6CF5"/><polygon points="2,16 13,13 16,16 13,19" fill="#F24FA7"/><polygon points="30,16 19,19 16,16 19,13" fill="#C7A8F0"/></svg><span class="type-name">Service business</span><span class="type-sub">Salon, agency, clinic, coaching</span></button>
+        <button type="button" class="type" role="radio" data-type="maker" aria-checked="false"><svg class="type-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="10" fill="#7FE0DC"/><path d="M16 6a10 10 0 0 1 0 20z" fill="#2EC4A6"/><g fill="#120E0B"><rect x="14" y="2" width="4" height="5"/><rect x="14" y="25" width="4" height="5"/><rect x="2" y="14" width="5" height="4"/><rect x="25" y="14" width="5" height="4"/></g><circle cx="16" cy="16" r="4" fill="#120E0B"/></svg><span class="type-name">Manufacturer / wholesale</span><span class="type-sub">Factory, workshop, distributor</span></button>
+        <button type="button" class="type" role="radio" data-type="blank" aria-checked="false"><svg class="type-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="6" y="4" width="20" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/><path d="M16 11v10M11 16h10" stroke="currentColor" stroke-width="2"/></svg><span class="type-name">Start blank</span><span class="type-sub">No example numbers</span></button>
+      </div>
+    </section>
+
+    <div class="example-banner" id="example-banner" hidden>
+      <span class="ex-dot" aria-hidden="true"></span>
+      <span data-t="example.banner">Example numbers. Replace them with yours.</span>
+      <button type="button" class="linkish" id="clear-examples" data-t="example.clear">Clear examples</button>
+    </div>
+
+    <div id="steps"></div>
+  </section>
+
+  <!-- Results -->
+  <section class="results" id="results" aria-labelledby="res-title">
+    <h2 class="res-title" id="res-title" data-t="res.title">Your real profit</h2>
+    <p class="res-flag" id="res-example" data-t="res.example">Based on example numbers</p>
+    <p class="res-flag whatif-on" id="res-whatif" data-t="wi.on" hidden>What-if is on.</p>
+
+    <!-- Lens world: the truth seen through the noise -->
+    <div class="lens" id="lens">
+      <div class="lens-bands" id="lens-bands" aria-hidden="true"></div>
+      <div class="burst" id="burst" aria-hidden="true">
+        <div class="burst-rays"></div>
+        <svg class="burst-twinkles" viewBox="0 0 100 100" focusable="false"><g fill="#fff"><path d="M18 22l1.2 4 4 1.2-4 1.2-1.2 4-1.2-4-4-1.2 4-1.2z"/><path d="M80 18l1 3.2 3.2 1-3.2 1-1 3.2-1-3.2-3.2-1 3.2-1z"/><path d="M84 76l1.2 4 4 1.2-4 1.2-1.2 4-1.2-4-4-1.2 4-1.2z"/><path d="M14 80l.8 2.6 2.6.8-2.6.8-.8 2.6-.8-2.6-2.6-.8 2.6-.8z"/></g></svg>
+      </div>
+      <svg class="lens-frame" viewBox="0 0 400 440" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="iri" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#C7A8F0"/>
+            <stop offset=".55" stop-color="#7FE0DC"/><stop offset=".8" stop-color="#F24FA7"/><stop offset="1" stop-color="#ffffff"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke-linecap="round">
+          <path d="M96 -20 C -30 140 -30 300 96 460" stroke="url(#iri)" stroke-width="34"/>
+          <path d="M96 -20 C -30 140 -30 300 96 460" stroke="#120E0B" stroke-width="31"/>
+          <path d="M304 -20 C 430 140 430 300 304 460" stroke="url(#iri)" stroke-width="34"/>
+          <path d="M304 -20 C 430 140 430 300 304 460" stroke="#120E0B" stroke-width="31"/>
+        </g>
+        <path d="M200 -40 C 40 120 40 320 200 480 C 360 320 360 120 200 -40 Z" fill="#120E0B" stroke="url(#iri)" stroke-width="1.6"/>
+      </svg>
+      <div class="orb-wrap">
+        <div class="orb" id="orb">
+          <div class="orb-refract" id="orb-refract" aria-hidden="true"></div>
+          <div class="orb-glass" aria-hidden="true"></div>
+          <p class="orb-text" id="orb-text" aria-live="polite" aria-atomic="true">
+            <span class="orb-l1" id="orb-l1"></span>
+            <span class="orb-val" id="orb-val"></span>
+            <span class="orb-l2" id="orb-l2"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-copy">
+      <p class="hero-line" id="hero-line"></p>
+      <p class="hero-month" id="hero-month"></p>
+    </div>
+
+    <!-- Canvas world again: the profit ladder -->
+    <div class="canvas canvas-results">
+      <section class="panel ladder-panel" aria-labelledby="ladder-title">
+        <div class="panel-head">
+          <h3 id="ladder-title" data-t="ladder.title">The profit ladder</h3>
+          <button type="button" class="chip-btn" id="ladder-toggle" aria-pressed="false" data-t="ladder.asTable">Show as table</button>
+        </div>
+        <p class="panel-sub" data-t="ladder.sub">From money in down to what you keep. Tap any step to see what it means.</p>
+        <ol class="ladder" id="ladder"></ol>
+        <div class="ladder-table-wrap" id="ladder-table" hidden></div>
+      </section>
+
+      <section class="panel" aria-labelledby="thought-title">
+        <h3 id="thought-title" data-t="thought.title">What you probably thought vs reality</h3>
+        <div id="thought"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="leaks-title">
+        <h3 id="leaks-title" data-t="leaks.title">Top 3 leaks</h3>
+        <p class="panel-sub" data-t="leaks.sub">Your biggest costs, as a share of net revenue.</p>
+        <ol class="leaks" id="leaks"></ol>
+      </section>
+
+      <section class="panel" aria-labelledby="be-title">
+        <h3 id="be-title" data-t="be.title">Break-even</h3>
+        <div id="breakeven"></div>
+      </section>
+
+      <section class="panel" id="po-panel" aria-labelledby="po-title" hidden>
+        <h3 id="po-title" data-t="po.title">Per order</h3>
+        <p class="panel-sub" id="po-sub"></p>
+        <div id="perorder"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="flags-title">
+        <h3 id="flags-title" data-t="flags.title">Health check</h3>
+        <ul class="flags" id="flags"></ul>
+      </section>
+
+      <section class="panel whatif" aria-labelledby="wi-title">
+        <div class="panel-head">
+          <h3 id="wi-title" data-t="wi.title">What if…?</h3>
+          <button type="button" class="chip-btn" id="wi-reset" data-t="wi.reset">Reset</button>
+        </div>
+        <p class="panel-sub" data-t="wi.sub">Move a slider. Everything above updates too.</p>
+        <div class="wi-sliders" id="wi-sliders"></div>
+        <div class="wi-out">
+          <div><span class="wi-out-label" data-t="wi.new">New profit per ₹100</span><span class="wi-out-val" id="wi-new"></span></div>
+          <div><span class="wi-out-label" data-t="wi.change">Change per month</span><span class="wi-out-val" id="wi-change"></span></div>
+        </div>
+      </section>
+
+      <details class="panel cash" id="cash">
+        <summary><span class="sum-title"><span data-t="cash.title">Profit vs cash</span> <span class="badge" data-t="cash.badge">Advanced</span></span><span class="chev" aria-hidden="true"></span></summary>
+        <p class="panel-sub" data-t="cash.line">Profit isn’t the same as cash. Here’s why your bank balance moved differently.</p>
+        <div class="cash-fields" id="cash-fields"></div>
+        <div class="cash-out" id="cash-out"></div>
+      </details>
+
+      <section class="panel learn" aria-labelledby="learn-title">
+        <h3 id="learn-title" data-t="learn.title">Learn the words</h3>
+        <p class="panel-sub" data-t="learn.sub">Short, plain meanings with a ₹ example.</p>
+        <div class="glossary" id="glossary"></div>
+      </section>
+
+      <section class="panel save" aria-labelledby="save-title">
+        <h3 id="save-title" data-t="save.title">Save or share</h3>
+        <p class="panel-sub" data-t="save.sub">Everything here happens on your phone.</p>
+        <div class="save-grid">
+          <button type="button" class="save-btn" id="save-image"><span class="save-name" data-t="save.image">Save as image</span><span class="save-sub" data-t="save.imageSub">With your numbers. Just for you.</span></button>
+          <button type="button" class="save-btn gold" id="save-share"><span class="save-name" data-t="save.share">Share card</span><span class="save-sub" data-t="save.shareSub">Percent only. No ₹ amounts, safe to post.</span></button>
+          <button type="button" class="save-btn" id="save-print"><span class="save-name" data-t="save.print">Print / Save PDF</span></button>
+          <button type="button" class="save-btn danger" id="save-clear"><span class="save-name" data-t="save.clear">Clear everything</span></button>
+        </div>
+        <p class="save-status" id="save-status" role="status"></p>
+        <div class="remember">
+          <button type="button" class="switch" id="remember" role="switch" aria-checked="false" aria-labelledby="remember-label" aria-describedby="remember-hint"><span class="knob"></span></button>
+          <div><span id="remember-label" class="remember-label" data-t="save.remember">Remember on this device</span>
+          <p id="remember-hint" class="hint" data-t="save.rememberHint">Off by default.</p></div>
+        </div>
+        <div class="offline" id="offline-card">
+          <a class="save-btn" id="offline-link" href="asli-munafa.html" download="asli-munafa.html"><span class="save-name" data-t="save.offline">Use it fully offline</span></a>
+          <p class="hint" data-t="save.offlineNote">It’s a web page, not an app. It opens in your browser and can’t install anything.</p>
+        </div>
+      </section>
+
+      <section class="panel cta" aria-labelledby="cta-text">
+        <p id="cta-text" class="cta-text" data-t="cta.text">Want this tracked automatically for your business every month?</p>
+        <p class="cta-action" id="cta-action"></p>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p data-t="footer.made">Made for small businesses in India. Open source.</p>
+  <p data-t="footer.advice">An estimate to help you think, not tax or financial advice.</p>
+  <p><a id="footer-code" href="#" rel="noopener noreferrer" target="_blank" data-t="footer.code">See the code</a></p>
+</footer>
+
+<!-- Live result bar -->
+<div class="livebar" id="livebar">
+  <span class="live-orb" aria-hidden="true"></span>
+  <span class="live-text" id="live-text"></span>
+  <button type="button" class="live-btn" id="live-btn" data-t="live.see">See result</button>
+</div>
+
+<!-- Privacy explainer -->
+<dialog class="dlg privacy-dlg" id="privacy-dlg" aria-labelledby="privacy-title">
+  <div class="mini-lens" aria-hidden="true"><span class="mini-orb"><svg viewBox="0 0 24 24" focusable="false"><path d="M7.5 10.5V8a4.5 4.5 0 0 1 9 0v2.5" fill="none" stroke="#F3EEE6" stroke-width="2.2" stroke-linecap="round"/><path d="M4.5 11.5a1.5 1.5 0 0 1 1.5-1.5h6v11H6a1.5 1.5 0 0 1-1.5-1.5z" fill="#F7C948"/><path d="M12 10h6a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 18 21h-6z" fill="#E08A1E"/></svg></span></div>
+  <h2 id="privacy-title" data-t="privacy.title">Your numbers stay behind this glass</h2>
+  <ul class="privacy-list">
+    <li data-t="privacy.p1"></li>
+    <li data-t="privacy.p2"></li>
+    <li data-t="privacy.p3"></li>
+    <li data-t="privacy.p5"></li>
+    <li><span data-t="privacy.p4"></span> <a id="privacy-code" href="#" rel="noopener noreferrer" target="_blank"></a></li>
+  </ul>
+  <button type="button" class="btn-primary" data-close data-t="privacy.close">Got it</button>
+</dialog>
+
+<!-- Share preview -->
+<dialog class="dlg share-dlg" id="share-dlg" aria-labelledby="share-title">
+  <h2 id="share-title" data-t="share.title">Your image is ready</h2>
+  <p class="hint" data-t="share.hint">Long-press the image to save it, or use the buttons.</p>
+  <img id="share-img" alt="">
+  <div class="dlg-actions">
+    <a class="btn-primary" id="share-download" href="#" download="asli-munafa.png" data-t="share.download">Download</a>
+    <button type="button" class="btn-secondary" id="share-native" data-t="share.share" hidden>Share</button>
+    <button type="button" class="btn-secondary" data-close data-t="share.close">Close</button>
+  </div>
+</dialog>
+</body>
+</html>
