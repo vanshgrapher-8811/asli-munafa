@@ -632,6 +632,9 @@ details[open] > summary .chev { transform: rotate(-135deg); }
 
 .footer { text-align: center; font-size: 13px; color: var(--cream); padding: 12px 16px 28px; display: grid; gap: 4px; }
 .footer a { color: var(--gold); font-weight: 600; display: inline-block; min-height: 44px; line-height: 44px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 10px; }
+.dlg-legal { margin: -6px 0 16px; font-size: 14px; }
+.dlg-legal a { color: var(--card-text); font-weight: 600; }
 
 /* ---------- Live bar ---------- */
 .livebar {

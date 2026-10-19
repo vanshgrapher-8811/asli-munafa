@@ -56,6 +56,8 @@ src/ui.js                  rendering, inputs, ladder, what-if, the four worlds' 
 src/share.js               share/save PNG drawn on a local <canvas>
 src/sw.js                  service worker template (build fills in version + file list)
 src/config.js              handle, GitHub URL, site URL
+privacy.html, terms.html   Privacy Policy and Terms of Use (English + Hindi, no scripts)
+404.html                   not-found page
 styles/main.css            Vintage Futurism v2: Canvas, Sunburst, Horizon, Lens
 fonts/                     Unbounded 800, Poppins 400/600 (+ Devanagari), Space Mono (OFL)
 tests/                     node --test
@@ -81,7 +83,7 @@ The reel's worked example is a test case (`tests/engine.test.js`) and matches to
 
 ## Deploy (Cloudflare Pages, free)
 
-These steps need Vansh's own login, so they're left for him.
+It's deployed as a direct upload (not Git-connected), so after a change run `npm run build` and `wrangler pages deploy dist --project-name asli-munafa`. First-time setup:
 
 1. **Push to GitHub** (public):
    ```bash
@@ -90,7 +92,7 @@ These steps need Vansh's own login, so they're left for him.
    ```
 2. **Create the Pages project.** Either:
    - **Dashboard:** Cloudflare → Workers & Pages → Create → Pages → Connect to Git → pick the repo. Build command `npm run build`, output directory `dist`. No environment variables needed.
-   - **CLI** (wrangler is already installed on this machine):
+   - **CLI**:
      ```bash
      wrangler login
      npm run build

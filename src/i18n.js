@@ -353,6 +353,9 @@ const en = {
   'footer.made': 'Made for small businesses in India. Open source.',
   'footer.advice': 'An estimate to help you think, not tax or financial advice.',
   'footer.code': 'See the code',
+  'footer.privacy': 'Privacy Policy',
+  'footer.terms': 'Terms of Use',
+  'privacy.full': 'Read the full Privacy Policy',
 
   'fmt.lakh': 'lakh',
   'fmt.crore': 'crore',
@@ -732,6 +735,9 @@ const hi = {
   'footer.made': 'भारत के छोटे बिज़नेस के लिए बनाया गया। ओपन सोर्स।',
   'footer.advice': 'सोचने में मदद के लिए अंदाज़ा है, टैक्स या फ़ाइनेंशियल सलाह नहीं।',
   'footer.code': 'कोड देखें',
+  'footer.privacy': 'निजता नीति',
+  'footer.terms': 'उपयोग की शर्तें',
+  'privacy.full': 'पूरी निजता नीति पढ़ें',
 
   'fmt.lakh': 'लाख',
   'fmt.crore': 'करोड़',

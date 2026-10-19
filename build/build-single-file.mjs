@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const MODULES = ['config', 'engine', 'presets', 'i18n', 'share', 'ui']; // dependency order
+const LEGAL_PAGES = ['privacy.html', 'terms.html', '404.html'];
 
 // Normalise line endings: the HTML parser turns CRLF into LF before hashing inline scripts.
 const read = async (p) => (await readFile(join(ROOT, p), 'utf8')).replace(/\r\n?/g, '\n');
@@ -72,6 +73,9 @@ async function main() {
   await writeFile(join(DIST, jsName), js);
   await writeFile(join(DIST, cssName), cssMin);
   await writeFile(join(DIST, 'robots.txt'), 'User-agent: *\nAllow: /\n');
+  // Static legal pages and the 404 page (no scripts).
+  for (const page of LEGAL_PAGES) await writeFile(join(DIST, page), await read(page));
+  await writeFile(join(DIST, 'styles/legal.css'), minifyCss(await read('styles/legal.css')));
   for (const f of fonts) await copyFile(join(ROOT, 'fonts', f), join(DIST, 'fonts', f));
   await writeFile(join(DIST, 'icons/favicon.svg'), favicon);
   const siteHtml = html
@@ -80,7 +84,7 @@ async function main() {
   if (siteHtml === html) throw new Error('Could not find the module script tag in index.html');
   await writeFile(join(DIST, 'index.html'), siteHtml);
 
-  const shell = ['./', './index.html', `./${jsName}`, `./${cssName}`, './icons/favicon.svg', ...fonts.map((f) => `./fonts/${f}`)];
+  const shell = ['./', './index.html', './privacy.html', './terms.html', './styles/legal.css', `./${jsName}`, `./${cssName}`, './icons/favicon.svg', ...fonts.map((f) => `./fonts/${f}`)];
   const sw = (await read('src/sw.js')).replace("'__VERSION__'", `'${version}'`).replace('= __FILES__;', `= ${JSON.stringify(shell, null, 2)};`);
   if (sw.includes("'__VERSION__'") || sw.includes('= __FILES__')) throw new Error('sw.js placeholders not filled');
   await writeFile(join(DIST, 'sw.js'), sw);
@@ -125,7 +129,10 @@ async function main() {
   if (/url\(\.\.\/fonts/.test(inlineCss)) throw new Error('A font reference was not inlined');
   const scriptHash = sha(js, 'base64');
   const singleCsp = `default-src 'none'; script-src 'sha256-${scriptHash}'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'`;
+  // The offline file has no neighbouring pages, so its legal links point at the live site.
+  const site = `https://${sources.config.match(/SITE_URL:\s*'([^']+)'/)[1]}`;
   let single = html
+    .replace(/href="(privacy|terms)\.html"/g, (m, page) => `href="${site}/${page}" rel="noopener noreferrer"`)
     .replace('<html lang="en">', '<html lang="en" data-single="1">')
     .replace(/<meta http-equiv="Content-Security-Policy" content="[^"]*">/, `<meta http-equiv="Content-Security-Policy" content="${singleCsp}">`)
     .replace(/<link rel="preload"[^>]*>\n/g, '')
